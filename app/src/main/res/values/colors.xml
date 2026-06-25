@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background">#0B0F19</color>
+
+    <color name="cardBackground">#151A26</color>
+
+    <color name="buttonNumber">#222938</color>
+
+    <color name="buttonOperator">#FF9500</color>
+
+    <color name="buttonEquals">#34C759</color>
+
+    <color name="primaryText">#FFFFFF</color>
+
+    <color name="secondaryText">#8E99AF</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+</resources>
