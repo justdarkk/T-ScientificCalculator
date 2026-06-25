@@ -60,10 +60,11 @@
                 android:id="@+id/txtHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text=""
+                android:visibility="gone"
                 android:textColor="@color/secondaryText"
-                android:textSize="16sp" />
+                android:textSize="12sp"
+                android:gravity="end"
+                android:maxLines="5"/>
 
             <TextView
                 android:id="@+id/txtDisplay"

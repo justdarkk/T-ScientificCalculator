@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import net.objecthunter.exp4j.ExpressionBuilder
 import kotlin.math.*
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
@@ -93,41 +94,63 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnClear).setOnClickListener {
             currentInput = ""
             display.text = "0"
+
+            history.visibility = View.GONE
         }
 
         findViewById<Button>(R.id.btnHistory).setOnClickListener {
-            history.text = calculationHistory.joinToString("\n")
+
+            if (history.visibility == TextView.VISIBLE) {
+                history.visibility = TextView.GONE
+            } else {
+                history.visibility = TextView.VISIBLE
+                history.text = calculationHistory.joinToString("\n")
+            }
         }
     }
 
     private fun setupScientificFunctions() {
 
         findViewById<Button>(R.id.btnSin).setOnClickListener {
-            calculateSingleInput { sin(Math.toRadians(it)) }
+            calculateSingleInput("sin") {
+                sin(Math.toRadians(it))
+            }
         }
 
         findViewById<Button>(R.id.btnCos).setOnClickListener {
-            calculateSingleInput { cos(Math.toRadians(it)) }
+            calculateSingleInput("cos") {
+                cos(Math.toRadians(it))
+            }
         }
 
         findViewById<Button>(R.id.btnTan).setOnClickListener {
-            calculateSingleInput { tan(Math.toRadians(it)) }
+            calculateSingleInput("tan") {
+                tan(Math.toRadians(it))
+            }
         }
 
         findViewById<Button>(R.id.btnLog).setOnClickListener {
-            calculateSingleInput { log10(it) }
+            calculateSingleInput("log") {
+                log10(it)
+            }
         }
 
         findViewById<Button>(R.id.btnLn).setOnClickListener {
-            calculateSingleInput { ln(it) }
+            calculateSingleInput("ln") {
+                ln(it)
+            }
         }
 
         findViewById<Button>(R.id.btnRoot).setOnClickListener {
-            calculateSingleInput { sqrt(it) }
+            calculateSingleInput("√") {
+                sqrt(it)
+            }
         }
 
         findViewById<Button>(R.id.btnSquare).setOnClickListener {
-            calculateSingleInput { it * it }
+            calculateSingleInput("x²") {
+                it * it
+            }
         }
 
         findViewById<Button>(R.id.btnFactorial).setOnClickListener {
@@ -179,28 +202,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun calculateSingleInput(operation: (Double) -> Double) {
-
+    private fun calculateSingleInput(
+        operationName: String,
+        operation: (Double) -> Double
+    ) {
         try {
-
             val value = currentInput.toDouble()
-
             val result = operation(value)
 
-            saveResult(currentInput, result)
+            val expression = "$operationName($value)"
+            calculationHistory.add("$expression = $result")
+
+            history.text = calculationHistory.joinToString("\n")
+
+            display.text = result.toString()
+            currentInput = result.toString()
 
         } catch (e: Exception) {
-
             display.text = "Error"
-
         }
     }
 
     private fun saveResult(expression: String, result: Double) {
 
-        display.text = result.toString()
-
         calculationHistory.add("$expression = $result")
+
+        history.text = calculationHistory.joinToString("\n")
+
+        display.text = result.toString()
 
         currentInput = result.toString()
     }
